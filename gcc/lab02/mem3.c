@@ -2,18 +2,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int stack_ptr()
-{__asm__
-    (   ".code32\n"
-        ".intel_syntax noprefix\n"
-        "mov    eax,    esp\n"
-    );
-}
+//int stack_ptr()
+//{__asm__
+   // (   ".code32\n"
+       // ".intel_syntax noprefix\n"
+       // "mov    eax,    esp\n"
+    //);
+//}
 
 
 int main(int argc, char *argv[])
 {   
-    unsigned long sp=(unsigned long)stack_ptr();
+    unsigned long sp=0;
     void* brk0 = sbrk(0);
     unsigned long tmp = sp - (unsigned long)brk0;
     printf("\nHEAP брейк0-адрес\t\t\t%Xh\n", brk0);
@@ -40,25 +40,21 @@ int main(int argc, char *argv[])
         for (int i=9; i>-1; i--)
             printf("ptr[%d] = %.3f\n", i, *(ptr + i));
 
-    int* ptr2 = (int*) malloc(h_size * sizeof(int));
-    printf("Адрес второго массива (int): %p\n", ptr2);
+             int* ptr2 = (int*) malloc(h_size * sizeof(int));
+        printf("Адрес второго массива (int): %p\n", ptr2);
 
         for (int i = 0; i < 10; i++) {
-        ptr2[i] = i * 10;
-    }
-
-        for (int i = 0; i < 10; i++) {
-        printf("ptr2[%d] = %d\n", i, ptr2[i]);
-    }
-
-        free(ptr2);
+            ptr2[i] = i * 10;
+            printf("ptr2[%d] = %d\n", i, ptr2[i]);
+        }
 
 
-        free(ptr);
         void* brk2 = sbrk(0);
         printf("\nHEAP брейк2-адрес\t\t\t%Xh\n", brk2);
         printf("HEAP брейк2-адрес - брейк1-адрес\t%d или %Xh байт\n", brk2-brk1, brk2-brk1);
         printf("HEAP брейк2-адрес - брейк0-адрес\t%d или %Xh байт\n\n\n", brk2-brk0, brk2-brk0);
+        //free(ptr2);
+
         return 0;
     }
     return 1;
