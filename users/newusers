@@ -1,0 +1,7 @@
+#!/bin/bash
+users=(sasha masha dasha petia)
+for user in ${users[@]};
+do
+    echo ${user}
+    sudo adduser --gid 100 --disabled-password --gecos ${user} ${user}
+done

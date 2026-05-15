@@ -1,0 +1,10 @@
+#!/bin/bash
+users=(itsadrill sasha masha)
+for user in ${users[@]};
+do
+    if ! [ -d /home/${user}/.ssh ];
+    then
+        sudo mkdir /home/${user}/.ssh
+    fi
+    sudo ssh-keygen -i -f ${user}.pub | sudo tee -a /home/${user}/.ssh/authorized_keys > /dev/null
+done
